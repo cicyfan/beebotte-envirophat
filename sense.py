@@ -4,7 +4,7 @@ import time
 #from envirophat import light, weather
 from enviroplus import gas
 from beebotte import *
-
+from subprocess import PIPE, Popen
 # import ST7735
 # try:
 #     # Transitional fix for breaking change in LTR559
@@ -39,11 +39,12 @@ def get_cpu_temperature():
 # temperature down, and increase to adjust up
 factor = 2.25
 
-cpu_temps = [get_cpu_temperature()] * 5
+
 def run():
   while True:
     ### Assume - the '-9' is a temperature calibration to take the Pi's heat into consideration. Adjust if needed.
     unit = "C"
+    cpu_temps = [get_cpu_temperature()] * 5
     cpu_temp = get_cpu_temperature()
     # Smooth out with some averaging to decrease jitter
     cpu_temps = cpu_temps[1:] + [cpu_temp]
@@ -56,7 +57,7 @@ def run():
 
     pm = pms5003.read()
     pm1 = float(pm.pm_ug_per_m3(1.0))
-    pm2.5 = float(pm.pm_ug_per_m3(2.5))
+    pm25 = float(pm.pm_ug_per_m3(2.5))
     pm10 = float(pm.pm_ug_per_m3(10))
 
     if temperature is not None: # and pressure is not None and lux is not None:

@@ -17,7 +17,7 @@ from bme280 import BME280
 from pms5003 import PMS5003, ReadTimeoutError as pmsReadTimeoutError
 
 ### Replace CHANNEL_TOKEN with that of your channel
-bbt = BBT(token = 'CHANNEL_TOKEN')
+bbt = BBT(token = 'token_PwPJgI1xkVjdY9nb')
 period = 300 ## Sensor data reporting period (5 minutes)
 
 ### Change channel name as suits you - in this instance, it is called Enviro_pHAT

@@ -7,6 +7,12 @@ from subprocess import PIPE, Popen
 from enviroplus import gas
 from bme280 import BME280
 from pms5003 import PMS5003, ReadTimeoutError as pmsReadTimeoutError
+try:
+    # Transitional fix for breaking change in LTR559
+    from ltr559 import LTR559
+    ltr559 = LTR559()
+except ImportError:
+    import ltr559
 
 # config var
 channel_token = 'token_UE7kVdFgTaW8PYNV'

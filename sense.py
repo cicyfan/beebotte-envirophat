@@ -20,6 +20,8 @@ humd_resource   = Resource(bbt, channel_name, 'humidity')
 pm1_resource   = Resource(bbt, channel_name, 'pm1')
 pm25_resource   = Resource(bbt, channel_name, 'pm25')
 pm10_resource   = Resource(bbt, channel_name, 'pm10')
+pressure_resource   = Resource(bbt, channel_name, 'pressure')
+lux_resource   = Resource(bbt, channel_name, 'lux')
 
 # BME280 temperature/pressure/humidity sensor
 bme280 = BME280()
@@ -30,14 +32,13 @@ def get_cpu_temperature():
     process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE, universal_newlines=True)
     output, _error = process.communicate()
     return float(output[output.index('=') + 1:output.rindex("'")])
-    
+
 # Tuning factor for compensation. Decrease this number to adjust the
 # temperature down, and increase to adjust up
 factor = 2.25
 
 def run():
   while True:
-    ### Assume - the '-9' is a temperature calibration to take the Pi's heat into consideration. Adjust if needed.
     unit = "C"
     cpu_temps = [get_cpu_temperature()] * 5
     cpu_temp = get_cpu_temperature()
@@ -55,13 +56,25 @@ def run():
     pm25 = float(pm.pm_ug_per_m3(2.5))
     pm10 = float(pm.pm_ug_per_m3(10))
 
+    unit = "hPa"
+    pressure = bme280.get_pressure()
+
+    unit = "Lux"
+    if proximity < 10:
+        lux = ltr559.get_lux()
+    else:
+        lux = 1
+
+
     if temperature is not None: # and pressure is not None and lux is not None:
        temp_resource.write(temperature)
        humd_resource.write(humidity)
        pm1_resource.write(pm1)
        pm25_resource.write(pm25)
        pm10_resource.write(pm10)
-      
+       pressure_resource.write(pressure)
+       lux_resource.write(lux)
+
     else:
         print ("Failed to get reading. Try again!")
 

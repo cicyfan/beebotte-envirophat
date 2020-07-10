@@ -1,5 +1,5 @@
 # beebotte-envirophat
-## Using Pimoroni's ~~EnviroPHat~~ Enviro+ with Beebotte.
+## Using Pimoroni's ~~Enviro pHAT~~ Enviro+ with Beebotte.
 
 This Python script is based on Beebotte's example to use a DHT11 temperature and humidity sensor on the Raspberry Pi and feed data to a dashboard. The example script can be found [here](https://beebotte.com/tutorials/monitor_humidity_and_temperature_with_raspberrypi) and requires a Beebotte account.
 
@@ -7,9 +7,11 @@ This Python script is based on Beebotte's example to use a DHT11 temperature and
 
 The installer script, created by [Pimoroni](https://shop.pimoroni.com), is simple:
 
-    curl -sS get.pimoroni.com/envirophat | bash
+    git clone https://github.com/pimoroni/enviroplus-python
+    cd enviroplus-python
+    sudo ./install.sh
 
-But full install instructions can be found [here](https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-enviro-phat).
+But full install instructions can be found [here](https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-enviro-plus).
 
 ### Install the Beebotte files
 
@@ -24,6 +26,11 @@ Simply clone this script by running:
     cd ~
     sudo git clone https://github.com/raspberrycoulis/beebotte-envirophat.git
 
+
+Make the script executable:
+
+    sudo chmod +x sense.py
+
 You'll need to make some changes first, specifically inserting your Channel Key (found via Beebotte) in the following place:
 
     ### Replace CHANNEL_KEY with that of your channel
@@ -37,10 +44,6 @@ Be sure to save when exiting:
 
     ctrl + x
     y
-
-Make the script executable:
-
-    sudo chmod +x sense.py
 
 And then finally test it by running:
 

@@ -60,6 +60,7 @@ def run():
     pressure = bme280.get_pressure()
 
     unit = "Lux"
+    proximity = ltr559.get_proximity()
     if proximity < 10:
         lux = ltr559.get_lux()
     else:

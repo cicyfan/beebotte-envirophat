@@ -1,33 +1,28 @@
 #!/usr/bin/env python
 
 import time
-#from envirophat import light, weather
-from enviroplus import gas
 from beebotte import *
 from subprocess import PIPE, Popen
-# import ST7735
-# try:
-#     # Transitional fix for breaking change in LTR559
-#     from ltr559 import LTR559
-#     ltr559 = LTR559()
-# except ImportError:
-#     import ltr559
 
+from enviroplus import gas
 from bme280 import BME280
 from pms5003 import PMS5003, ReadTimeoutError as pmsReadTimeoutError
 
-### Replace CHANNEL_TOKEN with that of your channel
-bbt = BBT(token = 'token_PwPJgI1xkVjdY9nb')
-period = 300 ## Sensor data reporting period (5 minutes)
+# config var
+channel_token = 'token_UE7kVdFgTaW8PYNV'
+channel_name = 'enviroplus'
 
-### Change channel name as suits you - in this instance, it is called Enviro_pHAT
-temp_resource   = Resource(bbt, 'Enviro_pHAT', 'temperature')
-# pressure_resource  = Resource(bbt, 'Enviro_pHAT', 'pressure')
-# light_resource = Resource(bbt, 'Enviro_pHAT', 'light')
+bbt = BBT(token = channel_token)
+period = 30 ## Sensor data reporting period (5 minutes)
+
+temp_resource   = Resource(bbt, channel_name, 'temperature')
+humd_resource   = Resource(bbt, channel_name, 'humidity')
+pm1_resource   = Resource(bbt, channel_name, 'pm1')
+pm25_resource   = Resource(bbt, channel_name, 'pm25')
+pm10_resource   = Resource(bbt, channel_name, 'pm10')
 
 # BME280 temperature/pressure/humidity sensor
 bme280 = BME280()
-
 # PMS5003 particulate sensor
 pms5003 = PMS5003()
 
@@ -35,10 +30,10 @@ def get_cpu_temperature():
     process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE, universal_newlines=True)
     output, _error = process.communicate()
     return float(output[output.index('=') + 1:output.rindex("'")])
+    
 # Tuning factor for compensation. Decrease this number to adjust the
 # temperature down, and increase to adjust up
 factor = 2.25
-
 
 def run():
   while True:
@@ -62,9 +57,11 @@ def run():
 
     if temperature is not None: # and pressure is not None and lux is not None:
        temp_resource.write(temperature)
-        
-   
-    
+       humd_resource.write(humidity)
+       pm1_resource.write(pm1)
+       pm25_resource.write(pm25)
+       pm10_resource.write(pm10)
+      
     else:
         print ("Failed to get reading. Try again!")
 

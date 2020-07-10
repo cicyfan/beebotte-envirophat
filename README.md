@@ -1,5 +1,5 @@
 # beebotte-envirophat
-## Using Pimoroni's Enviro+ with Beebotte.
+## Using Pimoroni's ~~EnviroPHat~~ Enviro+ with Beebotte.
 
 This Python script is based on Beebotte's example to use a DHT11 temperature and humidity sensor on the Raspberry Pi and feed data to a dashboard. The example script can be found [here](https://beebotte.com/tutorials/monitor_humidity_and_temperature_with_raspberrypi) and requires a Beebotte account.
 

@@ -19,7 +19,7 @@ channel_token = 'token_UE7kVdFgTaW8PYNV'
 channel_name = 'enviroplus'
 
 bbt = BBT(token = channel_token)
-period = 30 ## Sensor data reporting period (5 minutes)
+period = 90 ## Sensor data reporting period (5 minutes)
 
 temp_resource   = Resource(bbt, channel_name, 'temperature')
 humd_resource   = Resource(bbt, channel_name, 'humidity')
